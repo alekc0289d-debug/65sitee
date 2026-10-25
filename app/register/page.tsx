@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import {
   User, Lock, Check, ArrowLeft, ArrowRight,
   AlertCircle, Eye, EyeOff, Loader2, GraduationCap, Shield,
-  PhoneCall, School,
+  PhoneCall,
 } from "lucide-react";
 import { register, registerStatus } from "@/lib/api/auth";
 import { listClasses, type ClassItem } from "@/lib/api/classes";
@@ -115,7 +115,7 @@ export default function RegisterPage() {
   }
 
   // ============================================================
-  // Validatsiya
+  // Validatsiya (Sinf Majburiy!)
   // ============================================================
   function validateStep(): boolean {
     const e: Record<string, string> = {};
@@ -127,8 +127,10 @@ export default function RegisterPage() {
       if (!form.lastName.trim()) e.lastName = "Familiyani kiriting";
       else if (form.lastName.trim().length < 2) e.lastName = "Familiya juda qisqa";
 
-      // Sinfni majburiy qilmadik! Agar bo'sh bo'lsa, keyin admin tahrirlaydi.
-      // if (!form.classId) e.classId = "Sinfni tanlang yoki kiriting";
+      // SINIF MAJBURIY!
+      if (!form.classId.trim()) {
+        e.classId = "Sinfni tanlang yoki kiriting";
+      }
     }
 
     if (step === 1) {
@@ -191,7 +193,7 @@ export default function RegisterPage() {
         phone: form.studentPhone,
         motherPhone: form.motherPhone,
         fatherPhone: form.fatherPhone,
-        classId: form.classId || "", // Bo'sh bo'lsa backend o'zi 9-A qiladi
+        classId: form.classId,
         consent: form.terms,
       };
 
@@ -328,8 +330,10 @@ export default function RegisterPage() {
                           {errors.lastName && <ErrorText t={errors.lastName} />}
                         </div>
                       </div>
+                      
                       <div>
-                        <label className="block text-sm font-semibold text-stone-700 mb-2">Sinf <span className="text-stone-400 font-normal">(ixtiyoriy)</span></label>
+                        {/* SINIF MAJBURIY! */}
+                        <label className="block text-sm font-semibold text-stone-700 mb-2">Sinf <span className="text-amber-600">*</span></label>
                         {classesLoading ? (
                           <div className="input-field flex items-center gap-2 text-stone-400">
                             <Loader2 className="w-4 h-4 animate-spin" /> Sinflar yuklanmoqda...
