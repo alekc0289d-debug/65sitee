@@ -29,7 +29,7 @@ export interface LoginResponse {
     id: string;
     fullName: string;
     role: string;
-    roles?: string[]; // <-- MANA SHU QO'SHILDI (TS xatosini tuzatadi)
+    roles?: string[]; 
     classId: string;
     phone: string;
     totalScore: number;
@@ -51,6 +51,20 @@ export async function login(phone: string, password: string) {
 
 export async function logout(token: string) {
   return api.post("/api/auth/logout", { token });
+}
+
+// ============================================================
+// PAROLNI TIKLASH (Netlify ogohlantirishini tuzatadi)
+// ============================================================
+export async function forgotPassword(phone: string) {
+  return api.post<{
+    ok: boolean;
+    sent?: boolean;
+    method?: string;
+    message?: string;
+    code?: string;
+    botLink?: string;
+  }>("/api/auth/forgot-password", { phone });
 }
 
 export async function getMe(token: string) {

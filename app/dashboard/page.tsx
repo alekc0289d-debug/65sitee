@@ -12,13 +12,15 @@ export default function DashboardPage() {
   useEffect(() => {
     if (loading) return;
     // Rolga qarab yo'naltirish
-    const role = user?.role || "student";
-    if (role === "student") router.replace("/dashboard/student");
-    else if (role === "parent") router.replace("/dashboard/parent");
-    else if (role === "teacher") router.replace("/dashboard/teacher");
-    else if (role === "class_admin") router.replace("/dashboard/class-admin");
+    const role = user?.role;
+    
+    if (role === "bosh_admin") router.replace("/dashboard/superadmin");
     else if (role === "director") router.replace("/dashboard/director");
-    else if (role === "superadmin") router.replace("/dashboard/superadmin");
+    else if (role === "class_admin") router.replace("/dashboard/class-admin");
+    else if (role === "teacher") router.replace("/dashboard/teacher");
+    else if (role === "parent") router.replace("/dashboard/parent");
+    else router.replace("/dashboard/student");
+    
   }, [user, loading, router]);
 
   return (
